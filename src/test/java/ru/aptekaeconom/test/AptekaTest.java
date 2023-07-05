@@ -29,17 +29,15 @@ public class AptekaTest {
     @Test
     @DisplayName("Выбор подкатегории из каталога товаров")
     public void selectAnySubcategory() {
-        Random r = new Random();
-        int n = r.nextInt(8);
         String categoryName;
         String subcategoryName;
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
 
-        ElementsCollection subcategories = pageTop.selectSubcategoriesList(n);
-        int indexOfSubcategory = r.nextInt(subcategories.size());
+        ElementsCollection subcategories = pageTop.selectSubcategoriesList(0);
+        int indexOfSubcategory = subcategories.size() - 2;
         SelenideElement subcategory = subcategories.get(indexOfSubcategory);
-        categoryName = pageTop.selectCategory(n).getText();
+        categoryName = pageTop.selectCategory(0).getText();
         subcategoryName = subcategory.$("span.name").getAttribute("innerText");
 
         step("Выбор подкатегории", () -> {
@@ -60,7 +58,7 @@ public class AptekaTest {
         step("Отображение подкатегории в каталогах", () -> {
             assertThat(subcategory.
                     $(" span.name").getAttribute("innerText")).isEqualTo(subcategoryName);
-            assertThat(productsPage.selectSideSubcategory(n).get(indexOfSubcategory).
+            assertThat(productsPage.selectSideSubcategory(0).get(indexOfSubcategory).
                     $("span").getAttribute("innerText")).isEqualTo(subcategoryName);
 
         });
@@ -71,17 +69,15 @@ public class AptekaTest {
     @Test
     @DisplayName("Откладывание товара")
     public void saveProduct() {
-        Random r = new Random();
-        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = pageTop.selectSubcategoriesList(0).size() - 2;
 
         step("Выбор подкатегории из каталога", () -> {
-            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
+            pageTop.selectSubcategoriesList(0).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
+        int indexOfProduct = productsPage.productsGrid.size() - 1;
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
@@ -118,17 +114,15 @@ public class AptekaTest {
     @Test
     @DisplayName("Добавление отложенного товара в корзину")
     public void addToCart() {
-        Random r = new Random();
-        int n = r.nextInt(8);
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = r.nextInt(pageTop.selectSubcategoriesList(n).size());
+        int indexOfSubcategory = pageTop.selectSubcategoriesList(0).size() - 2;
 
         step("Выбор подкатегории из каталога", () -> {
-            pageTop.selectSubcategoriesList(n).get(indexOfSubcategory).click();
+            pageTop.selectSubcategoriesList(0).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = r.nextInt(productsPage.productsGrid.size());
+        int indexOfProduct = productsPage.productsGrid.size() - 1;
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
