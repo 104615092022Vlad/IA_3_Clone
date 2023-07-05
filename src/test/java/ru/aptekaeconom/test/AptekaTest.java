@@ -78,7 +78,7 @@ public class AptekaTest {
         });
 
         int indexOfProduct = productsPage.productsGrid.size() - 5;
-        SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
+        SelenideElement product = productsPage.productsGrid.get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
             productsPage.grid.shouldBe(Condition.visible);
