@@ -71,13 +71,13 @@ public class AptekaTest {
     public void saveProduct() {
         PageTop pageTop = new PageTop();
         ProductsPage productsPage = new ProductsPage();
-        int indexOfSubcategory = pageTop.selectSubcategoriesList(0).size() - 2;
+        int indexOfSubcategory = 13;
 
         step("Выбор подкатегории из каталога", () -> {
-            pageTop.selectSubcategoriesList(0).get(indexOfSubcategory).click();
+            pageTop.selectSubcategoriesList(1).get(indexOfSubcategory).click();
         });
 
-        int indexOfProduct = productsPage.productsGrid.size() - 1;
+        int indexOfProduct = productsPage.productsGrid.size() - 5;
         SelenideElement product = productsPage.productsGrid.filter(text("В наличии")).get(indexOfProduct);
 
         step("Добавление товара в список отложенных", () -> {
